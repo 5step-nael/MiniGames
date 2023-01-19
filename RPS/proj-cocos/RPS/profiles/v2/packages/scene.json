@@ -38,8 +38,8 @@
   "camera-infos": {
     "c77ecaa8-c936-46c4-a5b0-98692673ed87": {
       "position": {
-        "x": 480,
-        "y": 320,
+        "x": 540,
+        "y": 960,
         "z": 5000
       },
       "rotation": {
@@ -56,8 +56,8 @@
     },
     "7e0f4d9f-200d-4a89-abb5-bb88edd164bb": {
       "position": {
-        "x": 480,
-        "y": 320,
+        "x": 839.3829367368144,
+        "y": 987.5465114490504,
         "z": 5000
       },
       "rotation": {
@@ -75,5 +75,26 @@
   },
   "camera-uuids": [
     "c77ecaa8-c936-46c4-a5b0-98692673ed87"
-  ]
+  ],
+  "float-window": {
+    "position": {
+      "cc": {
+        "Camera": {
+          "dock": false,
+          "top": null,
+          "bottom": 10,
+          "left": null,
+          "right": 10
+        }
+      }
+    }
+  },
+  "game-view": {
+    "devicesInfo": {
+      "name": "iPhone 8 Plus",
+      "type": "device",
+      "width": 414,
+      "height": 736
+    }
+  }
 }

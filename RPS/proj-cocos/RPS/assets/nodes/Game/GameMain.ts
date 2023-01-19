@@ -1,4 +1,4 @@
-import { _decorator, Component, math, } from 'cc';
+import { _decorator, Component, math, Prefab, instantiate, Node, tween, Vec3, Color } from 'cc';
 import { Commons } from '../../scripts/Defines';
 import { CardInfo } from '../../scripts/types/CardInfo';
 import { Card } from '../Card';
@@ -6,8 +6,14 @@ const { ccclass, property } = _decorator;
 
 @ccclass('GameMain')
 export class GameMain extends Component {
+    @property({type: Prefab})
+    private prfb_Card: Prefab = null;
+
     @property([Card])
-    cards: Card[] = []!;
+    private cards: Card[] = []!;
+
+    @property(Node)
+    private cardpack_RIP: Node = null;
 
     start() {
         console.log("GameMain.start()");
@@ -28,41 +34,10 @@ export class GameMain extends Component {
     }
 
     private Check(__kind: Commons.Kind) {
-        // let isCollect = (this.cards[0].Get_Info().kind == __kind);
-        // // console.log(`Check(${__kind}) => isCollect= ${isCollect}`);
-
-        // if(!isCollect) {
-        //     console.log("GameOver!!");
-        //     return;
-        // }
-
         let cardKind = this.cards[0].Get_Info().kind;
         let userKind = __kind;
         let result: Commons.Result = Commons.Result.tie;
-        // if(Commons.Kind.rock == userKind) {
-        //     if(Commons.Kind.scissors == cardKind) {
-        //         result = Commons.Result.win;
-        //     }
-        //     else if(Commons.Kind.paper == cardKind) {
-        //         result = Commons.Result.lose;
-        //     }
-        // }
-        // else if(Commons.Kind.paper == userKind) {
-        //     if(Commons.Kind.rock == cardKind) {
-        //         result = Commons.Result.win;
-        //     }
-        //     else if(Commons.Kind.scissors == cardKind) {
-        //         result = Commons.Result.lose;
-        //     }
-        // }
-        // else if(Commons.Kind.scissors == userKind) {
-        //     if(Commons.Kind.paper == cardKind) {
-        //         result = Commons.Result.win;
-        //     }
-        //     else if(Commons.Kind.rock == cardKind) {
-        //         result = Commons.Result.lose;
-        //     }
-        // }
+
         if(userKind != cardKind) {
             let loseCardKind = this.Get_WinKind(userKind);
             result = (loseCardKind == cardKind
@@ -100,6 +75,28 @@ export class GameMain extends Component {
             this.cards[n].Setup(n, infos[n + 1]);
         }
         this.RandomCard(lastIndex);
+
+        let ripCard = instantiate(this.prfb_Card);
+        {
+            ripCard.parent = this.cardpack_RIP;
+            ripCard.setPosition(0, 0);
+
+            ripCard.getComponent(Card)
+                ?.Setup(-1, infos[0]);
+
+            tween(ripCard)
+                // .target(hideCard)
+                .to(1.5, {
+                    position: new Vec3(-720.0, 0, 0),
+                    // color: new Color(255, 255, 255, 0),
+                }, {
+                    easing: 'expoOut',
+                    onComplete: () => {
+                        ripCard.destroy();
+                }}
+                )
+                .start();
+        }
     }
 
     private Get_WinKind(__userKind: Commons.Kind): Commons.Kind {//인자로 받은 Kind가 이기는 상대방의 Kind

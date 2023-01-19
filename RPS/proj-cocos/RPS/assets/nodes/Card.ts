@@ -13,7 +13,7 @@ export class Card extends Component {
     @property([SpriteFrame])
     Sprites_Icon: SpriteFrame[] = []!;
 
-    _kind: Commons.Kind = Commons.Kind.unknown;
+    private _kind: Commons.Kind = Commons.Kind.unknown;
 
     start() {
         console.log("Card.start()");
@@ -37,7 +37,7 @@ export class Card extends Component {
         this.Setup_RPSIcon(__kind);
     }
 
-    Get_Color = (__kind: Commons.Kind): Color => {
+    private Get_Color = (__kind: Commons.Kind): Color => {
         let ret: Color = new Color(64, 64, 64);//Commons.Kind.unknown
         if(Commons.Kind.rock == __kind) {
             ret = new Color(104, 150, 255);
@@ -51,8 +51,12 @@ export class Card extends Component {
         return ret;
     }
 
-    Setup_RPSIcon = (__kind: Commons.Kind) => {
+    private Setup_RPSIcon = (__kind: Commons.Kind) => {
         this.spr_RPSIcon.spriteFrame = this.Sprites_Icon[__kind];
+    }
+
+    Get_Kind(): Commons.Kind {
+        return this._kind;
     }
 
     // update(deltaTime: number) {}

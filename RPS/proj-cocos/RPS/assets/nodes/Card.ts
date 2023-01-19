@@ -16,12 +16,10 @@ export class Card extends Component {
     _kind: Commons.Kind = Commons.Kind.unknown;
 
     start() {
+        console.log("Card.start()");
+
         let kind: Commons.Kind = Commons.Kind.rock;
-        let isUnknown = true;
-        {
-            kind = math.randomRangeInt(Commons.Kind.rock, Commons.Kind.scissors + 1);
-            isUnknown = (30 > math.randomRangeInt(1, 100 + 1));
-        }
+        let isUnknown = false;
         this.Setup(kind, isUnknown);
     }
 

@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Sprite, Color, SpriteFrame, color } from 'cc';
+import { _decorator, Component, Sprite, Color, SpriteFrame, math } from 'cc';
 import { Commons } from '../scripts/Defines';
 const { ccclass, property } = _decorator;
 
@@ -16,7 +16,13 @@ export class Card extends Component {
     _kind: Commons.Kind = Commons.Kind.unknown;
 
     start() {
-        this.Setup(Commons.Kind.scissors, false);
+        let kind: Commons.Kind = Commons.Kind.rock;
+        let isUnknown = true;
+        {
+            kind = math.randomRangeInt(Commons.Kind.rock, Commons.Kind.scissors + 1);
+            isUnknown = (30 > math.randomRangeInt(1, 100 + 1));
+        }
+        this.Setup(kind, isUnknown);
     }
 
     public Setup = (__kind: Commons.Kind, __isUnknown: boolean = false) => {

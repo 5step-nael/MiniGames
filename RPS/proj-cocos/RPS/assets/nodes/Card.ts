@@ -26,38 +26,42 @@ export class Card extends Component {
     }
 
     public Setup = (__index: number, __info: CardInfo) => {
-        // console.log(`Card.Setup(${__index}, ${__info.GetStr_Print()})`);
+        console.log(`Card.Setup(${__index}, ${__info.GetStr_Print()})`);
 
         this._index = __index;
         this._info = __info;
 
-        let colorKind = __info.kind;
-        {
-            if (__info.isUnknown) {
-                colorKind = Commons.Kind.unknown;
-            }
-            this.spr_Outline.color = Card.Get_Color(colorKind);
-        }
+        this.spr_Outline.color = Card.Get_Color(__info);
 
-        this.Setup_RPSIcon(__info.kind);
+        this.Setup_RPSIcon(__info);
     }
 
-    static Get_Color = (__kind: Commons.Kind): Color => {
+    static Get_Color = (__info: CardInfo): Color => {
         let ret: Color = new Color(64, 64, 64);//Commons.Kind.unknown
-        if(Commons.Kind.rock == __kind) {
-            ret = new Color(104, 150, 255);
-        }
-        else if(Commons.Kind.paper == __kind) {
-            ret = new Color(255, 212, 114);
-        }
-        else if(Commons.Kind.scissors == __kind) {
-            ret = new Color(255, 107, 88);
+
+        if(!__info.isUnknown) {
+            if(Commons.Kind.rock == __info.kind) {
+                ret = new Color(104, 150, 255);
+            }
+            else if(Commons.Kind.paper == __info.kind) {
+                ret = new Color(255, 212, 114);
+            }
+            else if(Commons.Kind.scissors == __info.kind) {
+                ret = new Color(255, 107, 88);
+            }
         }
         return ret;
     }
 
-    private Setup_RPSIcon = (__kind: Commons.Kind) => {
-        this.spr_RPSIcon.spriteFrame = this.Sprites_Icon[__kind];
+    private Setup_RPSIcon = (__info: CardInfo) => {
+        this.spr_RPSIcon.spriteFrame = this.Sprites_Icon[__info.kind];
+
+        let color = Color.WHITE;
+
+        if(__info.isUnknown) {
+            color = new Color(48, 48, 48, 255);
+        }
+        this.spr_RPSIcon.color = color;
     }
 
     Get_Info(): CardInfo {
@@ -65,7 +69,7 @@ export class Card extends Component {
     }
 
     Set_Opacity(__alpha: number) {
-        let color = Card.Get_Color(this._info.kind);
+        let color = Card.Get_Color(this._info);
         color.a = __alpha;
         this.spr_Outline.color = color;
 

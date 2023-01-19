@@ -63,23 +63,6 @@ export class GameMain extends Component {
                 );
         }
 
-        // {//DEV
-        //     let strResult = "";
-        //     if(Commons.Result.lose == result) {
-        //         strResult = "졌다";
-        //     }
-        //     // else if(Commons.Result.win == result) {
-        //     //     strResult = "이겼다";
-        //     // }
-        //     else if(Commons.Result.tie == result) {
-        //         strResult = "비겼다";
-        //     }
-
-        //     if (Commons.Result.win != result) {
-        //         console.log(`Check: ${strResult}`);
-        //         return;
-        //     }
-        // }
         if(Commons.Result.lose == result) {
             //game over
             this.curtain.active = true;

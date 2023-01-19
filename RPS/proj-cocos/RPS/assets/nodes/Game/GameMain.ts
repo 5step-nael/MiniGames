@@ -1,4 +1,4 @@
-import { _decorator, Component, math, Prefab, instantiate, Node, tween, Vec3, Color } from 'cc';
+import { _decorator, Component, math, Prefab, instantiate, Node, tween, Vec3, Color, Label, Button } from 'cc';
 import { Commons } from '../../scripts/Defines';
 import { CardInfo } from '../../scripts/types/CardInfo';
 import { Card } from '../Card';
@@ -19,9 +19,22 @@ export class GameMain extends Component {
     @property([ActionButton])
     private actionButtons: ActionButton[] = []!;
 
-    start() {
-        console.log("GameMain.start()");
+    @property(Node)
+    private curtain: Node = null;
 
+    @property(Label)
+    private lbl_Message: Label = null;
+
+    @property(Node)
+    private btn_Retry: Node = null;
+
+    start() {
+        // console.log("GameMain.start()");
+
+        this.Make_Game();
+    }
+
+    Make_Game() {
         for(let n=0; n<this.cards.length; n++) {
             this.RandomCard(n);
         }
@@ -69,6 +82,9 @@ export class GameMain extends Component {
         // }
         if(Commons.Result.lose == result) {
             //game over
+            this.curtain.active = true;
+            this.lbl_Message.string = "GAME OVER";
+            this.btn_Retry.active = true;
             return;
         }
         else if(Commons.Result.tie == result) {
@@ -151,6 +167,14 @@ export class GameMain extends Component {
         // console.log(`OnClick_Action(${customEventData})=> kind: ${kind}`);
 
         this.Check(kind);
+    }
+
+    OnCLick_Retry(event: Event, customEventData: string) {
+        this.lbl_Message.string = "GAME OVER";
+        this.btn_Retry.active = false;
+        this.curtain.active = false;
+
+        this.Make_Game();
     }
 
     // update(deltaTime: number) {}

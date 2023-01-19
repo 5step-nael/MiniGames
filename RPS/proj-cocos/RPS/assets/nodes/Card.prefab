@@ -414,6 +414,20 @@
     "spr_RPSIcon": {
       "__id__": 11
     },
+    "Sprites_Icon": [
+      {
+        "__uuid__": "142fde97-52db-4c53-9f94-b28e23c4a237@f9941",
+        "__expectedType__": "cc.SpriteFrame"
+      },
+      {
+        "__uuid__": "bb8719e1-57ab-4ff3-9936-b9614394a22a@f9941",
+        "__expectedType__": "cc.SpriteFrame"
+      },
+      {
+        "__uuid__": "f18575e3-d11b-49ac-a0d9-b16ca2d0fba6@f9941",
+        "__expectedType__": "cc.SpriteFrame"
+      }
+    ],
     "_id": ""
   },
   {

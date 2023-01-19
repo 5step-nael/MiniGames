@@ -27,7 +27,7 @@ export class Card extends Component {
 
     public Setup = (__index: number, __info: CardInfo) => {
         console.log(`Card.Setup(${__index}, ${__info.GetStr_Print()})`);
-        
+
         this._index = __index;
         this._info = __info;
 
@@ -36,13 +36,13 @@ export class Card extends Component {
             if (__info.isUnknown) {
                 colorKind = Commons.Kind.unknown;
             }
-            this.spr_Outline.color = this.Get_Color(colorKind);
+            this.spr_Outline.color = Card.Get_Color(colorKind);
         }
 
         this.Setup_RPSIcon(__info.kind);
     }
 
-    private Get_Color = (__kind: Commons.Kind): Color => {
+    static Get_Color = (__kind: Commons.Kind): Color => {
         let ret: Color = new Color(64, 64, 64);//Commons.Kind.unknown
         if(Commons.Kind.rock == __kind) {
             ret = new Color(104, 150, 255);
@@ -62,6 +62,17 @@ export class Card extends Component {
 
     Get_Info(): CardInfo {
         return this._info;
+    }
+
+    Set_Opacity(__alpha: number) {
+        let color = Card.Get_Color(this._info.kind);
+        color.a = __alpha;
+        this.spr_Outline.color = color;
+
+        color = new Color(255, 255, 255, __alpha);
+        this.getComponent(Sprite)
+            .color = color;
+        this.spr_RPSIcon.color = color;
     }
 
     // update(deltaTime: number) {}

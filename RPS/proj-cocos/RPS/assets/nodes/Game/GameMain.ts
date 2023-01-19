@@ -78,22 +78,43 @@ export class GameMain extends Component {
 
         let ripCard = instantiate(this.prfb_Card);
         {
+            let cardInfo = infos[0];
             ripCard.parent = this.cardpack_RIP;
             ripCard.setPosition(0, 0);
 
-            ripCard.getComponent(Card)
-                ?.Setup(-1, infos[0]);
+            let ts_Card = ripCard.getComponent(Card);
+            ts_Card?.Setup(-1, cardInfo);
 
+            let Duration = 1.0;
+            // { Duration = 3.0; }
             tween(ripCard)
                 // .target(hideCard)
-                .to(1.5, {
+                .to(Duration, {
                     position: new Vec3(-720.0, 0, 0),
                     // color: new Color(255, 255, 255, 0),
                 }, {
                     easing: 'expoOut',
-                    onComplete: () => {
+                    onComplete: (target?: object) => {
                         ripCard.destroy();
-                }}
+                    },
+                    onUpdate : (target: object, ratio:number)=>{
+                        // console.log(ratio);
+
+                        let revRatio = 1.0 - ratio;
+                        // console.log(revRatio);
+
+                        let alpha = 255 * revRatio;;
+                        // console.log(alpha);
+
+                        ts_Card.Set_Opacity(alpha);
+                    }
+                    // progress: (start: number, end: number, current: number, ratio: number): number => {
+                    //     let ret = math.lerp(start, end, ratio);
+                    //     // console.log(ret);
+                    //     console.log(current);
+                    //     return ret;
+                    // }
+                }
                 )
                 .start();
         }

@@ -1,5 +1,6 @@
 import { _decorator, Component, Sprite, Color, SpriteFrame, math } from 'cc';
 import { Commons } from '../scripts/Defines';
+import { CardInfo } from '../scripts/types/CardInfo';
 const { ccclass, property } = _decorator;
 
 @ccclass('Card')
@@ -13,28 +14,32 @@ export class Card extends Component {
     @property([SpriteFrame])
     Sprites_Icon: SpriteFrame[] = []!;
 
-    private _kind: Commons.Kind = Commons.Kind.unknown;
+    private _index: number = -1;
+    private _info: CardInfo = null;
 
     start() {
-        console.log("Card.start()");
+        // console.log("Card.start()");
 
-        let kind: Commons.Kind = Commons.Kind.rock;
-        let isUnknown = false;
-        this.Setup(kind, isUnknown);
+        // let kind: Commons.Kind = Commons.Kind.rock;
+        // let isUnknown = false;
+        // this.Setup(kind, isUnknown);
     }
 
-    public Setup = (__kind: Commons.Kind, __isUnknown: boolean = false) => {
-        this._kind = __kind;
+    public Setup = (__index: number, __info: CardInfo) => {
+        console.log(`Card.Setup(${__index}, ${__info.GetStr_Print()})`);
+        
+        this._index = __index;
+        this._info = __info;
 
-        let colorKind = __kind;
+        let colorKind = __info.kind;
         {
-            if (__isUnknown) {
+            if (__info.isUnknown) {
                 colorKind = Commons.Kind.unknown;
             }
             this.spr_Outline.color = this.Get_Color(colorKind);
         }
 
-        this.Setup_RPSIcon(__kind);
+        this.Setup_RPSIcon(__info.kind);
     }
 
     private Get_Color = (__kind: Commons.Kind): Color => {
@@ -55,8 +60,8 @@ export class Card extends Component {
         this.spr_RPSIcon.spriteFrame = this.Sprites_Icon[__kind];
     }
 
-    Get_Kind(): Commons.Kind {
-        return this._kind;
+    Get_Info(): CardInfo {
+        return this._info;
     }
 
     // update(deltaTime: number) {}

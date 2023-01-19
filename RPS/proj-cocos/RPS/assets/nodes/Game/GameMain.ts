@@ -1,5 +1,6 @@
 import { _decorator, Component, math, } from 'cc';
 import { Commons } from '../../scripts/Defines';
+import { CardInfo } from '../../scripts/types/CardInfo';
 import { Card } from '../Card';
 const { ccclass, property } = _decorator;
 
@@ -11,30 +12,48 @@ export class GameMain extends Component {
     start() {
         console.log("GameMain.start()");
 
-        for(const card of this.cards) {
-            this.RandomCard(card);
+        for(let n=0; n<this.cards.length; n++) {
+            this.RandomCard(n);
         }
     }
 
-    private RandomCard = (__card: Card, __ratio_Unkown: number = 20) => {
-        let kind: Commons.Kind = Commons.Kind.rock;
-        let isUnknown = false;
+    private RandomCard = (__index: number, __ratio_Unkown: number = 20) => {
+        let info = new CardInfo(Commons.Kind.unknown, false);
         {
-            kind = math.randomRangeInt(Commons.Kind.rock, Commons.Kind.scissors + 1);
+            info.kind = math.randomRangeInt(Commons.Kind.rock, Commons.Kind.scissors + 1);
 
-            isUnknown = (__ratio_Unkown > math.randomRangeInt(1, 100 + 1));
+            info.isUnknown = (__ratio_Unkown > math.randomRangeInt(1, 100 + 1));
         }
-        __card.Setup(kind, isUnknown);
+        this.cards[__index].Setup(__index, info);
     }
 
     private Check(__kind: Commons.Kind) {        
-        let isCollect = (this.cards[0].Get_Kind() == __kind);
-        console.log(`Check(${__kind}) => isCollect= ${isCollect}`);
+        let isCollect = (this.cards[0].Get_Info().kind == __kind);
+        // console.log(`Check(${__kind}) => isCollect= ${isCollect}`);
+
+        if(!isCollect) {
+            console.log("GameOver!!");
+            return;
+        }
+
+        console.log("collect~~");
+
+        let infos: CardInfo[] = [];
+        for(let n=0; n<this.cards.length; n++) {
+            infos.push(this.cards[n].Get_Info());
+        }
+        // console.log(infos);
+
+        let lastIndex = this.cards.length - 1;
+        for(let n=0; n<lastIndex; n++) {
+            this.cards[n].Setup(n, infos[n + 1]);
+        }
+        this.RandomCard(lastIndex);
     }
 
     OnClick_Action(event: Event, customEventData: string) {
         let kind: Commons.Kind = Number(customEventData);
-        console.log(`OnClick_Action(${customEventData})=> kind: ${kind}`);
+        // console.log(`OnClick_Action(${customEventData})=> kind: ${kind}`);
 
         this.Check(kind);
     }

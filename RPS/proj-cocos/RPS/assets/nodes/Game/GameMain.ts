@@ -2,6 +2,7 @@ import { _decorator, Component, math, Prefab, instantiate, Node, tween, Vec3, Co
 import { Commons } from '../../scripts/Defines';
 import { CardInfo } from '../../scripts/types/CardInfo';
 import { Card } from '../Card';
+import { ActionButton } from './ActionButton';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameMain')
@@ -14,6 +15,9 @@ export class GameMain extends Component {
 
     @property(Node)
     private cardpack_RIP: Node = null;
+
+    @property([ActionButton])
+    private actionButtons: ActionButton[] = []!;
 
     start() {
         console.log("GameMain.start()");
@@ -46,22 +50,30 @@ export class GameMain extends Component {
                 );
         }
 
-        {//DEV
-            let strResult = "";
-            if(Commons.Result.lose == result) {
-                strResult = "졌다";
-            }
-            // else if(Commons.Result.win == result) {
-            //     strResult = "이겼다";
-            // }
-            else if(Commons.Result.tie == result) {
-                strResult = "비겼다";
-            }
+        // {//DEV
+        //     let strResult = "";
+        //     if(Commons.Result.lose == result) {
+        //         strResult = "졌다";
+        //     }
+        //     // else if(Commons.Result.win == result) {
+        //     //     strResult = "이겼다";
+        //     // }
+        //     else if(Commons.Result.tie == result) {
+        //         strResult = "비겼다";
+        //     }
 
-            if (Commons.Result.win != result) {
-                console.log(`Check: ${strResult}`);
-                return;
-            }
+        //     if (Commons.Result.win != result) {
+        //         console.log(`Check: ${strResult}`);
+        //         return;
+        //     }
+        // }
+        if(Commons.Result.lose == result) {
+            //game over
+            return;
+        }
+        else if(Commons.Result.tie == result) {
+            this.actionButtons[__kind].Shake();
+            return;
         }
 
         let infos: CardInfo[] = [];

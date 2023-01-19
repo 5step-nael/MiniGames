@@ -25,7 +25,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 121
+      "__id__": 127
     },
     "_id": "7e0f4d9f-200d-4a89-abb5-bb88edd164bb"
   },
@@ -1172,6 +1172,11 @@
     "cardpack_RIP": {
       "__id__": 45
     },
+    "actionButtons": [
+      null,
+      null,
+      null
+    ],
     "_id": "dedXa6u7JBKYpcOVq+s2O9"
   },
   {
@@ -1928,6 +1933,15 @@
       },
       {
         "__id__": 119
+      },
+      {
+        "__id__": 121
+      },
+      {
+        "__id__": 123
+      },
+      {
+        "__id__": 125
       }
     ],
     "nestedPrefabInstanceRoots": [
@@ -2073,21 +2087,90 @@
     ]
   },
   {
+    "__type__": "cc.TargetOverrideInfo",
+    "source": {
+      "__id__": 64
+    },
+    "sourceInfo": null,
+    "propertyPath": [
+      "actionButtons",
+      "0"
+    ],
+    "target": {
+      "__id__": 50
+    },
+    "targetInfo": {
+      "__id__": 122
+    }
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "88VnwlsIRGOKJdSL7AZ2eB"
+    ]
+  },
+  {
+    "__type__": "cc.TargetOverrideInfo",
+    "source": {
+      "__id__": 64
+    },
+    "sourceInfo": null,
+    "propertyPath": [
+      "actionButtons",
+      "1"
+    ],
+    "target": {
+      "__id__": 67
+    },
+    "targetInfo": {
+      "__id__": 124
+    }
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "88VnwlsIRGOKJdSL7AZ2eB"
+    ]
+  },
+  {
+    "__type__": "cc.TargetOverrideInfo",
+    "source": {
+      "__id__": 64
+    },
+    "sourceInfo": null,
+    "propertyPath": [
+      "actionButtons",
+      "2"
+    ],
+    "target": {
+      "__id__": 83
+    },
+    "targetInfo": {
+      "__id__": 126
+    }
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "88VnwlsIRGOKJdSL7AZ2eB"
+    ]
+  },
+  {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 122
+      "__id__": 128
     },
     "shadows": {
-      "__id__": 123
+      "__id__": 129
     },
     "_skybox": {
-      "__id__": 124
+      "__id__": 130
     },
     "fog": {
-      "__id__": 125
+      "__id__": 131
     },
     "octree": {
-      "__id__": 126
+      "__id__": 132
     }
   },
   {

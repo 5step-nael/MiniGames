@@ -182,8 +182,8 @@ export class GameMain extends Component {
 
         let loopCount = 0;
         tween(this.lbl_Message.node)
-            .delay(1.5)
-            .by(2.0
+            .delay(1.0)
+            .by(1.0
                 , { scale: new Vec3(1, 1, 1), }
                 // , new Vec3(1, 1, 1)
 

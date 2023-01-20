@@ -1,7 +1,7 @@
 import { _decorator, Component, math, Prefab, instantiate, Node, tween, Vec3, Color, Label, Button } from 'cc';
 import { Commons } from '../../scripts/Defines';
 import { CardInfo } from '../../scripts/types/CardInfo';
-import { Card } from '../Card';
+import { Card } from './Card';
 import { ActionButton } from './ActionButton';
 const { ccclass, property } = _decorator;
 

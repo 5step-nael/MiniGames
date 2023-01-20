@@ -1,6 +1,6 @@
 import { _decorator, Component, Sprite, Color, SpriteFrame, math } from 'cc';
-import { Commons } from '../scripts/Defines';
-import { CardInfo } from '../scripts/types/CardInfo';
+import { Commons } from '../../scripts/Defines';
+import { CardInfo } from '../../scripts/types/CardInfo';
 const { ccclass, property } = _decorator;
 
 @ccclass('Card')

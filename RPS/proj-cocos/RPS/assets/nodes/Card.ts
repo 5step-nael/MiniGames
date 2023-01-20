@@ -26,7 +26,7 @@ export class Card extends Component {
     }
 
     public Setup = (__index: number, __info: CardInfo) => {
-        console.log(`Card.Setup(${__index}, ${__info.GetStr_Print()})`);
+        // console.log(`Card.Setup(${__index}, ${__info.GetStr_Print()})`);
 
         this._index = __index;
         this._info = __info;

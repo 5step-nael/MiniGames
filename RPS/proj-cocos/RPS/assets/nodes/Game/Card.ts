@@ -1,6 +1,7 @@
 import { _decorator, Component, Sprite, Color, SpriteFrame, math, Label } from 'cc';
 import { Commons } from '../../scripts/Defines';
 import { CardInfo } from '../../scripts/types/CardInfo';
+import { Util } from '../../scripts/Util';
 const { ccclass, property } = _decorator;
 
 @ccclass('Card')
@@ -71,6 +72,18 @@ export class Card extends Component {
 
     Get_Info(): CardInfo {
         return this._info;
+    }
+
+    Fight = (__select: Commons.Kind): Commons.Result => {
+        let ret = Commons.Result.tie;
+        if(this._info.kind != __select) {
+            let winKind = Util.Get_WinKind(this._info.kind);
+            ret = (winKind == __select
+                ? Commons.Result.win
+                : Commons.Result.lose
+                );
+        }
+        return ret;
     }
 
     Set_Opacity(__alpha: number) {

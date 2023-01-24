@@ -1,4 +1,5 @@
 import { Commons } from "../Defines";
+import { Util } from "../Util";
 
 export class CardInfo {
     kind: Commons.Kind = Commons.Kind.unknown;
@@ -17,7 +18,7 @@ export class CardInfo {
     }
 
     GetStr_Print(): string {
-        let ret = `CardInfo: kind= ${this.kind}, option= ${this.option}`;
+        let ret = `CardInfo: kind= ${this.kind}(${Util.GetString_Kind(this.kind)}), option= ${this.option}`;
         return ret;
     }
     Print() {

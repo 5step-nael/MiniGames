@@ -38,6 +38,15 @@ export class GameMain extends Component {
     @property(Timer) private timer: Timer = null;
 
     start() {
+
+        for(let n=0; n<this.actionButtons.length; n++) {
+            let kind: Commons.Kind = n;
+
+            this.actionButtons[n].node.on(Node.EventType.TOUCH_START, (event) => {
+                this.Check(kind);
+            });
+        }
+
         // console.log("GameMain.start()");
         this.curtain.active = true;
 
@@ -213,12 +222,12 @@ export class GameMain extends Component {
                         else if(1 == loopCount) { this.lbl_Message.string = "GAME"; }
                         else if(2 == loopCount) { this.lbl_Message.string = "START"; }
 
-                        console.log(`onStart: ${loopCount}`);
+                        // console.log(`onStart: ${loopCount}`);
                     },
 
                     onComplete: () => {
                         this.lbl_Message.node.setScale(0, 0, 0);
-                        console.log(`onComplete: ${loopCount}`);
+                        // console.log(`onComplete: ${loopCount}`);
                         // this.curtain.active = false;
                         loopCount++;
                     }
@@ -248,22 +257,15 @@ export class GameMain extends Component {
         {
             info.kind = math.randomRangeInt(Commons.Kind.rock, Commons.Kind.scissors + 1);
             info.option = math.randomRangeInt(Commons.Option.def, Commons.Option.lose + 1);
+            // { info.option = Commons.Option.def; }//DEV
         }
         this.cards[__index].Setup(__index, info);
     }
 
     private Check(__kind: Commons.Kind) {
-        let cardKind = this.cards[0].Get_Info().kind;
-        let userKind = __kind;
-        let result: Commons.Result = Commons.Result.tie;
 
-        if(userKind != cardKind) {
-            let loseCardKind = Util.Get_WinKind(userKind);
-            result = (loseCardKind == cardKind
-                ? Commons.Result.win
-                : Commons.Result.lose
-                );
-        }
+        let selectKind = __kind;
+        let result = this.cards[0].Fight(selectKind);
 
         if(Commons.Result.lose == result) {
             this.GameOver();
@@ -357,12 +359,12 @@ export class GameMain extends Component {
         this.lbl_Score.string = __score.toString();
     }
 
-    OnClick_Action(event: Event, customEventData: string) {
-        let kind: Commons.Kind = Number(customEventData);
-        // console.log(`OnClick_Action(${customEventData})=> kind: ${kind}`);
+    // OnClick_Action(event: Event, customEventData: string) {
+    //     let kind: Commons.Kind = Number(customEventData);
+    //     // console.log(`OnClick_Action(${customEventData})=> kind: ${kind}`);
 
-        this.Check(kind);
-    }
+    //     this.Check(kind);
+    // }
 
     OnCLick_Retry(event: Event, customEventData: string) {
         // this.lbl_Message.string = "GAME OVER";

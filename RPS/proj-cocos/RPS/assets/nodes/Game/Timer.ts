@@ -22,7 +22,7 @@ export class Timer extends Component {
         // { this.Setup_Timer(this.Callback) }//DEV
     }
 
-    private Reset_Timer = () => {
+    Reset_Timer = () => {
         this._isRunning = false;
         this._runningTime = this.FullTime;
 

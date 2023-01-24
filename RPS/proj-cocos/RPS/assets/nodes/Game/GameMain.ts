@@ -4,6 +4,7 @@ import { CardInfo } from '../../scripts/types/CardInfo';
 import { Card } from './Card';
 import { ActionButton } from './ActionButton';
 import { Util } from '../../scripts/Util';
+import { Timer } from './Timer';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameMain')
@@ -29,9 +30,14 @@ export class GameMain extends Component {
     @property(Node)
     private btn_Retry: Node = null;
 
+    @property(Timer) private timer: Timer = null;
+
     start() {
         // console.log("GameMain.start()");
         this.curtain.active = true;
+
+        this.timer.Setup_Timer(this.EndTimer);
+
         this.GameStart();
     }
 
@@ -219,6 +225,8 @@ export class GameMain extends Component {
                 // console.log("Finish!!");
                 this.lbl_Message.node.active = false;
                 this.curtain.active = false;
+
+                this.timer.Control_Timer(true);
             })
             .start();
     }
@@ -253,21 +261,15 @@ export class GameMain extends Component {
         }
 
         if(Commons.Result.lose == result) {
-            //game over
-            this.curtain.active = true;
-
-            this.lbl_Message.string = "GAME OVER";
-            this.lbl_Message.node.setScale(1, 1, 1);
-            this.lbl_Message.color = Color.RED;
-            this.lbl_Message.node.active = true;
-
-            this.btn_Retry.active = true;
+            this.GameOver();
             return;
         }
         else if(Commons.Result.tie == result) {
             this.actionButtons[__kind].Shake();
             return;
         }
+
+        this.timer.Bonus();
 
         let infos: CardInfo[] = [];
         for(let n=0; n<this.cards.length; n++) {
@@ -325,6 +327,24 @@ export class GameMain extends Component {
         }
     }
 
+    private GameOver = () => {
+        //game over
+        this.timer.Control_Timer(false);
+
+        this.curtain.active = true;
+
+        this.lbl_Message.string = "GAME OVER";
+        this.lbl_Message.node.setScale(1, 1, 1);
+        this.lbl_Message.color = Color.RED;
+        this.lbl_Message.node.active = true;
+
+        this.btn_Retry.active = true;
+    }
+
+    private EndTimer = () => {
+        this.GameOver();
+    }
+
     OnClick_Action(event: Event, customEventData: string) {
         let kind: Commons.Kind = Number(customEventData);
         // console.log(`OnClick_Action(${customEventData})=> kind: ${kind}`);
@@ -335,6 +355,8 @@ export class GameMain extends Component {
     OnCLick_Retry(event: Event, customEventData: string) {
         // this.lbl_Message.string = "GAME OVER";
         
+        this.timer.Reset_Timer();
+
         this.lbl_Message.node.active = false;
         this.btn_Retry.active = false;
         // this.curtain.active = false;

@@ -12,7 +12,7 @@ export class Timer extends Component {
     private readonly RunningVelocity = 1.0;
     private readonly TimeBonus = 0.5;
 
-    private _cb_EndTime: () => void;
+    private _cb_EndTime: () => void = null;
 
     start() {
         // { input.on(Input.EventType.KEY_DOWN, this.onKeyDown, this); }//DEV
@@ -29,7 +29,7 @@ export class Timer extends Component {
         this.spr_Inner.fillRange = this.Calc_TimeFillRange();
     }
 
-    Setup_Timer = (__callback_EndTime: () => void) => {
+    Setup_Timer = (__callback_EndTime: () => void = null) => {
         this._cb_EndTime = __callback_EndTime;
         this.Reset_Timer();
     }
@@ -40,6 +40,9 @@ export class Timer extends Component {
 
     Bonus = () => {
         // let beforeTime = this._runningTime;
+        if(!this._isRunning) {
+            return;
+        }
 
         let rt = this._runningTime;
         rt += this.TimeBonus;

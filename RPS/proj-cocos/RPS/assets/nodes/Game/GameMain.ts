@@ -3,6 +3,7 @@ import { Commons } from '../../scripts/Defines';
 import { CardInfo } from '../../scripts/types/CardInfo';
 import { Card } from './Card';
 import { ActionButton } from './ActionButton';
+import { Util } from '../../scripts/Util';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameMain')
@@ -244,7 +245,7 @@ export class GameMain extends Component {
         let result: Commons.Result = Commons.Result.tie;
 
         if(userKind != cardKind) {
-            let loseCardKind = this.Get_WinKind(userKind);
+            let loseCardKind = Util.Get_WinKind(userKind);
             result = (loseCardKind == cardKind
                 ? Commons.Result.win
                 : Commons.Result.lose
@@ -322,20 +323,6 @@ export class GameMain extends Component {
                 )
                 .start();
         }
-    }
-
-    private Get_WinKind(__userKind: Commons.Kind): Commons.Kind {//인자로 받은 Kind가 이기는 상대방의 Kind
-        let ret = Commons.Kind.unknown;
-        if(Commons.Kind.rock == __userKind) {
-            ret = Commons.Kind.scissors;
-        }
-        else if(Commons.Kind.paper == __userKind) {
-            ret = Commons.Kind.rock;
-        }
-        else if(Commons.Kind.scissors == __userKind) {
-            ret = Commons.Kind.paper;
-        }
-        return ret;
     }
 
     OnClick_Action(event: Event, customEventData: string) {

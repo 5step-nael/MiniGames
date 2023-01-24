@@ -7,6 +7,9 @@ export class Timer extends Component {
     spr_Inner: Sprite = null!;
 
     private _isRunning = false;
+    private _runningTime = 0.0;
+    private readonly FullTime = 5.0;
+    private readonly RunningVelocity = 1.0;
 
     private _cb_EndTime: () => void;
 
@@ -20,8 +23,9 @@ export class Timer extends Component {
 
     private Reset_Timer = () => {
         this._isRunning = false;
+        this._runningTime = this.FullTime;
 
-        this.spr_Inner.fillRange = 1.0;
+        this.spr_Inner.fillRange = this.Calc_TimeFillRange();
     }
 
     Setup_Timer = (__callback_EndTime: () => void) => {
@@ -42,13 +46,11 @@ export class Timer extends Component {
         switch(event.keyCode) {
             case KeyCode.ENTER:
             case KeyCode.NUM_ENTER:
-                // console.log('Press a key');
-                // this._isRunning = !this._isRunning;
                 this.Control_Timer(!this._isRunning);
                 break;
 
             case KeyCode.SPACE:
-                this.spr_Inner.fillRange = 1.0;
+                this.Reset_Timer();
                 break;
         }
     }
@@ -60,22 +62,32 @@ export class Timer extends Component {
         this.Update_TimeCheck(deltaTime);
     }
 
+    private Calc_TimeFillRange = (): number => {
+        let ret = 0.0;
+        if(0.0 >= this._runningTime) {
+            this._runningTime = 0.0;
+        }
+        ret = this._runningTime / this.FullTime;
+        return ret;
+    }
+
     private Update_TimeCheck = (__dt: number) => {
         if(!this._isRunning) {
             return;
         }
 
-        let timeRange: number = this.spr_Inner.fillRange;
-        timeRange -= (__dt * 1.0);
+        this._runningTime -= (__dt * this.RunningVelocity);
+        let fillRange = this.Calc_TimeFillRange();
+        // console.log(fillRange);
 
         let isEnded = false;
-        if(0.0 >= timeRange) {
-            timeRange = 0.0;
+        if(0.0 >= fillRange) {
+            fillRange = 0.0;
             this._isRunning = false;
             
             isEnded = true;
         }
-        this.spr_Inner.fillRange = timeRange;
+        this.spr_Inner.fillRange = fillRange;
 
         if(isEnded && null !=  this._cb_EndTime) {
             this._cb_EndTime();

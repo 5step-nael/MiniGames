@@ -30,6 +30,11 @@ export class GameMain extends Component {
     @property(Node)
     private btn_Retry: Node = null;
 
+    @property(Label)
+    private lbl_Score: Label = null;
+
+    _score: number = 0;
+
     @property(Timer) private timer: Timer = null;
 
     start() {
@@ -42,6 +47,7 @@ export class GameMain extends Component {
     }
 
     private GameStart() {
+        this.Set_Score(0);
         this.Make_Game();
 
         this.TweenMessage_GameStart();
@@ -270,6 +276,7 @@ export class GameMain extends Component {
         }
 
         this.timer.Bonus();
+        this.Set_Score(this._score + 1);
 
         let infos: CardInfo[] = [];
         for(let n=0; n<this.cards.length; n++) {
@@ -343,6 +350,12 @@ export class GameMain extends Component {
 
     private EndTimer = () => {
         this.GameOver();
+    }
+
+    private Set_Score = (__score: number) => {
+        this._score = __score;
+
+        this.lbl_Score.string = __score.toString();
     }
 
     OnClick_Action(event: Event, customEventData: string) {

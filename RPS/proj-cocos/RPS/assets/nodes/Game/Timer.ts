@@ -8,8 +8,9 @@ export class Timer extends Component {
 
     private _isRunning = false;
     private _runningTime = 0.0;
-    private readonly FullTime = 5.0;
+    private readonly FullTime = 3.0;
     private readonly RunningVelocity = 1.0;
+    private readonly TimeBonus = 0.5;
 
     private _cb_EndTime: () => void;
 
@@ -37,6 +38,19 @@ export class Timer extends Component {
         this._isRunning = __running;
     }
 
+    Bonus = () => {
+        // let beforeTime = this._runningTime;
+
+        let rt = this._runningTime;
+        rt += this.TimeBonus;
+        if(this.FullTime <= rt) {
+            rt = this.FullTime;
+        }
+        this._runningTime = rt;
+
+        // console.log(`Bonus(): ${beforeTime} => ${this._runningTime}`);
+    }
+
     //begin of DEV DEV
     private Callback = () => {
         console.log("Callback");
@@ -51,6 +65,10 @@ export class Timer extends Component {
 
             case KeyCode.SPACE:
                 this.Reset_Timer();
+                break;
+
+            case KeyCode.BACKSPACE:
+                this.Bonus();
                 break;
         }
     }

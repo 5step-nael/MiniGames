@@ -39,7 +39,7 @@ export class Card extends Component {
 
         this.Setup_RPSIcon(__info);
 
-        this.lbl_Lose.node.active = __info.IsLose();
+        this.Setup_LoseLabel(__info);
     }
 
     static Get_Color = (__info: CardInfo): Color => {
@@ -70,6 +70,13 @@ export class Card extends Component {
         this.spr_RPSIcon.color = color;
     }
 
+    private Setup_LoseLabel = (__info: CardInfo) => {
+        this.lbl_Lose.node.active = __info.IsLose();
+        if(__info.IsLose()) {
+            this.lbl_Lose.color = Card.Get_Color(__info);
+        }
+    }
+
     Get_Info(): CardInfo {
         return this._info;
     }
@@ -77,11 +84,21 @@ export class Card extends Component {
     Fight = (__select: Commons.Kind): Commons.Result => {
         let ret = Commons.Result.tie;
         if(this._info.kind != __select) {
-            let winKind = Util.Get_WinKind(this._info.kind);
-            ret = (winKind == __select
-                ? Commons.Result.win
-                : Commons.Result.lose
+            if (this._info.IsLose()) {
+                let winKind = Util.Get_WinKind(__select);
+                ret = (winKind == this._info.kind
+                    ? Commons.Result.win
+                    : Commons.Result.lose
                 );
+            }
+            else {
+                
+                let winKind = Util.Get_WinKind(this._info.kind);
+                ret = (winKind == __select
+                    ? Commons.Result.win
+                    : Commons.Result.lose
+                );
+            }
         }
         return ret;
     }

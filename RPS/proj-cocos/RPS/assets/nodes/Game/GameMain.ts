@@ -243,12 +243,11 @@ export class GameMain extends Component {
         }
     }
 
-    private RandomCard = (__index: number, __ratio_Unkown: number = 35) => {
-        let info = new CardInfo(Commons.Kind.unknown, false);
+    private RandomCard = (__index: number) => {
+        let info = new CardInfo(Commons.Kind.unknown, Commons.Option.NONE);
         {
             info.kind = math.randomRangeInt(Commons.Kind.rock, Commons.Kind.scissors + 1);
-
-            info.isUnknown = (__ratio_Unkown > math.randomRangeInt(1, 100 + 1));
+            info.option = math.randomRangeInt(Commons.Option.def, Commons.Option.lose + 1);
         }
         this.cards[__index].Setup(__index, info);
     }

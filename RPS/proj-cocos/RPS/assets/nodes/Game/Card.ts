@@ -1,4 +1,4 @@
-import { _decorator, Component, Sprite, Color, SpriteFrame, math } from 'cc';
+import { _decorator, Component, Sprite, Color, SpriteFrame, math, Label } from 'cc';
 import { Commons } from '../../scripts/Defines';
 import { CardInfo } from '../../scripts/types/CardInfo';
 const { ccclass, property } = _decorator;
@@ -13,6 +13,9 @@ export class Card extends Component {
 
     @property([SpriteFrame])
     Sprites_Icon: SpriteFrame[] = []!;
+
+    @property([Label])
+    lbl_Lose: Label = null;
 
     private _index: number = -1;
     private _info: CardInfo = null;
@@ -34,12 +37,14 @@ export class Card extends Component {
         this.spr_Outline.color = Card.Get_Color(__info);
 
         this.Setup_RPSIcon(__info);
+
+        this.lbl_Lose.node.active = __info.IsLose();
     }
 
     static Get_Color = (__info: CardInfo): Color => {
         let ret: Color = new Color(64, 64, 64);//Commons.Kind.unknown
 
-        if(!__info.isUnknown) {
+        if(!__info.IsUnknown()) {
             if(Commons.Kind.rock == __info.kind) {
                 ret = new Color(104, 150, 255);
             }
@@ -58,7 +63,7 @@ export class Card extends Component {
 
         let color = Color.WHITE;
 
-        if(__info.isUnknown) {
+        if(__info.IsUnknown()) {
             color = new Color(48, 48, 48, 255);
         }
         this.spr_RPSIcon.color = color;

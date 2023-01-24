@@ -10,7 +10,7 @@ export class Timer extends Component {
     private _runningTime = 0.0;
     private readonly FullTime = 3.0;
     private readonly RunningVelocity = 1.0;
-    private readonly TimeBonus = 0.5;
+    private readonly TimeBonus = 1.0;
 
     private _cb_EndTime: () => void = null;
 

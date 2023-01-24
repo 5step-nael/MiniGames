@@ -15,11 +15,11 @@ export class Timer extends Component {
     private _cb_EndTime: () => void;
 
     start() {
-        input.on(Input.EventType.KEY_DOWN, this.onKeyDown, this);
+        // { input.on(Input.EventType.KEY_DOWN, this.onKeyDown, this); }//DEV
 
         this.Reset_Timer();
 
-        { this.Setup_Timer(this.Callback) }//DEV
+        // { this.Setup_Timer(this.Callback) }//DEV
     }
 
     private Reset_Timer = () => {
@@ -51,28 +51,28 @@ export class Timer extends Component {
         // console.log(`Bonus(): ${beforeTime} => ${this._runningTime}`);
     }
 
-    //begin of DEV DEV
-    private Callback = () => {
-        console.log("Callback");
-    }
+    // //begin of DEV DEV
+    // private Callback = () => {
+    //     console.log("Callback");
+    // }
 
-    onKeyDown (event: EventKeyboard) {
-        switch(event.keyCode) {
-            case KeyCode.ENTER:
-            case KeyCode.NUM_ENTER:
-                this.Control_Timer(!this._isRunning);
-                break;
+    // onKeyDown (event: EventKeyboard) {
+    //     switch(event.keyCode) {
+    //         case KeyCode.ENTER:
+    //         case KeyCode.NUM_ENTER:
+    //             this.Control_Timer(!this._isRunning);
+    //             break;
 
-            case KeyCode.SPACE:
-                this.Reset_Timer();
-                break;
+    //         case KeyCode.SPACE:
+    //             this.Reset_Timer();
+    //             break;
 
-            case KeyCode.BACKSPACE:
-                this.Bonus();
-                break;
-        }
-    }
-    //end of DEV DEV
+    //         case KeyCode.BACKSPACE:
+    //             this.Bonus();
+    //             break;
+    //     }
+    // }
+    // //end of DEV DEV
 
     update(deltaTime: number) {
         // console.log(deltaTime);

@@ -1,4 +1,4 @@
-import { _decorator, Component, math, Prefab, instantiate, Node, tween, Vec3, Color, Label, Button } from 'cc';
+import { _decorator, Component, math, Prefab, instantiate, Node, tween, Vec3, Color, Label, Button, AudioSource, AudioClip } from 'cc';
 import { Commons } from '../../scripts/Defines';
 import { CardInfo } from '../../scripts/types/CardInfo';
 import { Card } from './Card';
@@ -36,6 +36,11 @@ export class GameMain extends Component {
     _score: number = 0;
 
     @property(Timer) private timer: Timer = null;
+
+    @property(AudioClip) private se_Win: AudioClip = null;
+    @property(AudioClip) private se_Lose: AudioClip = null;
+    @property(AudioClip) private se_Tie: AudioClip = null;
+    @property(AudioSource) private AV: AudioSource = null;
 
     start() {
 
@@ -269,11 +274,22 @@ export class GameMain extends Component {
 
         if(Commons.Result.lose == result) {
             this.GameOver();
+
+            this.AV.clip = this.se_Lose;
+            this.AV.play();
             return;
         }
         else if(Commons.Result.tie == result) {
             this.actionButtons[__kind].Shake();
+
+            this.AV.clip = this.se_Tie;
+            this.AV.play();
             return;
+        }
+
+        {///sound fx
+            this.AV.clip = this.se_Win;
+            this.AV.play();
         }
 
         this.timer.Bonus();

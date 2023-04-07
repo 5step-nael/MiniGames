@@ -108,6 +108,10 @@ export class MainStage extends Component {
         this.Reset();
 
         let index_Words = math.randomRangeInt(0, this.WordList.length);
+        {
+            // index_Words = 16;//DEV TEST (QUEEN)
+            // index_Words = 14;//DEV TEST (OCTOPUS)
+        }
         let word: string = this.WordList[index_Words].en;
         // { word="ABCDEFGHIJKLMNOPQRSTUV"; }
         {
@@ -116,17 +120,20 @@ export class MainStage extends Component {
             word += addItem;
         }
         // { word = "BANANABANANABANANABANANA"; }//DEV TEST
-        for(let item of word) {
+        //for(let item of word) {
+        for(let index=0; index<word.length; index++) {
             // console.log(item);
 
             let pang = instantiate(this.prfb_Pang);
             pang.setParent(this.node_Pangs);
+
+            let char = word[index];
                 
             let cs_Pang = pang.getComponent(Pang);
-            cs_Pang.Setup(item, this.Get_Position());
+            cs_Pang.Setup(index, char, this.Get_Position());
 
             let button_Pang = pang.getComponent(Button);
-            button_Pang.node.on(Button.EventType.CLICK, this.foo, this);
+            button_Pang.node.on(Button.EventType.CLICK, this.Tapped_Pang, this);
 
             this._pangs.push(cs_Pang);
         }
@@ -138,9 +145,22 @@ export class MainStage extends Component {
         this._ready_WordIndex = 0;
     }
 
-    foo = (__button: Button): void => {
+    Tapped_Pang = (__button: Button): void => {
         let pang = __button.getComponent(Pang);
-        console.log(pang.CHAR);
+        let keyChar = this._now_Word[pang.Index];
+        console.log(`Tapped_Pang(${pang.Index}, ${pang.CHAR}): ${keyChar}`);
+        
+        //if(this._ready_WordIndex != pang.Index) {
+        if(keyChar != pang.CHAR) {
+            console.log("틀림!!");
+            return;
+        }
+
+        this._ready_WordIndex += 1;
+        if(this._now_Word.length <= this._ready_WordIndex) {
+            console.log("클리어~~");
+        }
+        pang.Tapped();
     }
 
     private Get_Position = (): Vec3 => {

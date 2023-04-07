@@ -9,13 +9,23 @@ export class Pang extends Component {
     @property([Label])
     private label: Label = null;
 
+    @property([Label])
+    private DEV_lbl_Index: Label = null;
+
+    public Index: number = -1;
     public CHAR: string = "";
 
     start() {
     }
 
-    public Setup(__char: string, __pos: Vec3) {
+    public Setup(__index: number, __char: string, __pos: Vec3) {
+        this.Index = __index;
         this.CHAR = __char;
+        this.node.name = `PANG [${__index}] - ${__char}`;
+        // {//DEV TEST
+        //     this.DEV_lbl_Index.node.active = true;
+        //     this.DEV_lbl_Index.string = __index.toString();
+        // }
         
         this.label.string = __char;
 
@@ -33,6 +43,11 @@ export class Pang extends Component {
             return true;
         }
         return false;
+    }
+
+    public Tapped = (): void => {
+        // this.destroy();
+        this.node.destroy();
     }
 
     // update(deltaTime: number) {}

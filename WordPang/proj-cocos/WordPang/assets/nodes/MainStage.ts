@@ -27,6 +27,35 @@ export class MainStage extends Component {
 
     private _pangs: Pang[] = [];
 
+    readonly WordList: Word[] = [
+        new Word("사과", "APPLE"),
+        new Word("벌", "BEE"),
+        new Word("자동차", "CAR"),
+        new Word("개", "DOG"),
+        new Word("코끼리", "ELEPHANT"),
+        new Word("물고기", "FISH"),
+        new Word("기린", "GIRAFFE"),
+        new Word("말", "HORSE"),
+        new Word("이글루", "IGLOO"),
+        new Word("주스", "JUICE"),
+        new Word("열쇠", "KEY"),
+        new Word("레몬", "LEMON"),
+        new Word("생쥐", "MOUSE"),
+        new Word("간호사", "NURSE"),
+        new Word("문어", "OCTOPUS"),
+        new Word("펭귄", "PENGUIN"),
+        new Word("여왕", "QUEEN"),
+        new Word("토끼", "RABBIT"),
+        new Word("모래", "SAND"),
+        new Word("나무", "TREE"),
+        new Word("우산", "UMBRELLA"),
+        new Word("바이올린", "VIOLIN"),
+        new Word("고래", "WHALE"),
+        new Word("실로폰", "XYLOPHONE"),
+        new Word("요트", "YACHT"),
+        new Word("얼룩말", "ZEBRA"),
+    ];
+
     start() {
         this.lbl_KR.string = "";
         this.lbl_EN.string = "";
@@ -62,10 +91,6 @@ export class MainStage extends Component {
         }
         return ret;
     }
-
-    readonly WordList: Word[] = [
-        new Word("사과", "APPLE"),
-    ];
 
     Make_Word() {
         this._pangs = [];

@@ -184,7 +184,7 @@ export class MainStage extends Component {
 
         tween(opa)
             .delay(1.0)
-            .to(0.1, { opacity: 0 }, {
+            .to(0.2, { opacity: 0 }, {
                 'onComplete': () => {
                     this.spr_Clear.node.active = false;
 

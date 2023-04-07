@@ -1,4 +1,4 @@
-import { _decorator, Component, instantiate, Label, math, Node, Prefab, Vec3, Button } from 'cc';
+import { _decorator, Component, instantiate, Label, math, Node, Prefab, Vec3, Button, Sprite, tween, Color, UIOpacity } from 'cc';
 import { Pang } from './Pang';
 const { ccclass, property } = _decorator;
 
@@ -24,6 +24,9 @@ export class MainStage extends Component {
     private lbl_KR = null;
     @property(Label)
     private lbl_EN = null;
+
+    @property(Sprite)
+    private spr_Clear = null;
 
     private _pangs: Pang[] = [];
 
@@ -169,9 +172,26 @@ export class MainStage extends Component {
             for(let index=this._ready_WordIndex; index<this._pangs.length; index++) {
                 this._pangs[index].Hide_Pang(true);
             }
-            
-            this.Make_Word();
+
+            this.ClearGame();
         }
+    }
+
+    ClearGame = (): void => {
+        this.spr_Clear.node.active = true;
+        let opa = this.spr_Clear.getComponent(UIOpacity);
+        opa.opacity = 255;
+
+        tween(opa)
+            .delay(1.0)
+            .to(0.1, { opacity: 0 }, {
+                'onComplete': () => {
+                    this.spr_Clear.node.active = false;
+
+                    this.Make_Word();
+                }
+            })
+            .start();
     }
 
     private Get_Position = (): Vec3 => {

@@ -160,6 +160,10 @@ export class MainStage extends Component {
         this._ready_WordIndex += 1;
         if(this._now_Word.length <= this._ready_WordIndex) {
             console.log("클리어~~");
+
+            for(let index=this._ready_WordIndex; index<this._pangs.length; index++) {
+                this._pangs[index].Hide_Pang(true);
+            }
         }
         pang.Tapped();
     }

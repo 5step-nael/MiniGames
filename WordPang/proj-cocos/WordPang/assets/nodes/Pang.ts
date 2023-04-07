@@ -69,12 +69,17 @@ export class Pang extends Component {
         // this.destroy();
         // this.node.destroy();
 
+        this.Hide_Pang(true);
+    }
+    public Hide_Pang = (__destory: boolean): void => {
         tween(this.node)
             .to(0.1, { scale: new Vec3(0, 0, 0) }, {
                 'onStart': () => {},
                 // 'onUpdate': () => {},
                 'onComplete': () => {
-                    this.node.destroy();
+                    if(__destory) {
+                        this.node.destroy();
+                    }
                 },
             })
             .start();

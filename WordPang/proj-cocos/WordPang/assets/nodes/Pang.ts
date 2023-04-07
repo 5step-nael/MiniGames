@@ -1,4 +1,4 @@
-import { _decorator, Component, Label, Node, Sprite, Vec3 } from 'cc';
+import { _decorator, Component, Label, Node, Sprite, Vec3, tween, Button } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('Pang')
@@ -30,6 +30,26 @@ export class Pang extends Component {
         this.label.string = __char;
 
         this.node.position = __pos;
+
+        this.Show_Pang();
+    }
+
+    Show_Pang = (): void => {
+        this.node.setScale(0, 0, 0);
+
+        tween(this.node)
+            .to(0.15, { scale: new Vec3(1, 1, 1) }, {
+                'onStart': () => {},
+                // 'onUpdate': () => {},
+                'onComplete': () => {
+                    this.node.setScale(1, 1, 1);
+                    this.getComponent(Button)
+                        .interactable = true;
+
+                    // console.log(`Show_Pang(): ${this.node.name}`);
+                },
+            })
+            .start();
     }
 
     public Check_Collision = (__checkPosition: Vec3): boolean => {
@@ -47,7 +67,17 @@ export class Pang extends Component {
 
     public Tapped = (): void => {
         // this.destroy();
-        this.node.destroy();
+        // this.node.destroy();
+
+        tween(this.node)
+            .to(0.1, { scale: new Vec3(0, 0, 0) }, {
+                'onStart': () => {},
+                // 'onUpdate': () => {},
+                'onComplete': () => {
+                    this.node.destroy();
+                },
+            })
+            .start();
     }
 
     // update(deltaTime: number) {}

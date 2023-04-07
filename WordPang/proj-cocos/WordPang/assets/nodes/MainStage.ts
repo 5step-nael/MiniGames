@@ -157,6 +157,8 @@ export class MainStage extends Component {
             return;
         }
 
+        this.lbl_EN.string = this._now_Word.substring(0, this._ready_WordIndex + 1);
+        // console.log(`collect=> Now: ${this._now_Word}`);
         this._ready_WordIndex += 1;
         if(this._now_Word.length <= this._ready_WordIndex) {
             console.log("클리어~~");

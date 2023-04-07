@@ -153,7 +153,8 @@ export class MainStage extends Component {
         
         //if(this._ready_WordIndex != pang.Index) {
         if(keyChar != pang.CHAR) {//char 비교.. 중복되는 알파벳 고려
-            console.log("틀림!!");
+            // console.log("틀림!!");
+            pang.Wrong();
             return;
         }
 
@@ -167,7 +168,7 @@ export class MainStage extends Component {
                 this._pangs[index].Hide_Pang(true);
             }
         }
-        pang.Tapped();
+        pang.Correct();
     }
 
     private Get_Position = (): Vec3 => {

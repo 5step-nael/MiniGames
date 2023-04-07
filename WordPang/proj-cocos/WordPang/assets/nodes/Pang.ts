@@ -1,4 +1,4 @@
-import { _decorator, Component, Label, Node, Sprite, Vec3, tween, Button } from 'cc';
+import { _decorator, Component, Label, Node, Sprite, Vec3, tween, Button, math } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('Pang')
@@ -15,12 +15,16 @@ export class Pang extends Component {
     public Index: number = -1;
     public CHAR: string = "";
 
+    private _posInit: Vec3 = null;
+
     start() {
     }
 
     public Setup(__index: number, __char: string, __pos: Vec3) {
         this.Index = __index;
         this.CHAR = __char;
+        this._posInit = __pos;
+
         this.node.name = `PANG [${__index}] - ${__char}`;
         // {//DEV TEST
         //     this.DEV_lbl_Index.node.active = true;
@@ -65,7 +69,38 @@ export class Pang extends Component {
         return false;
     }
 
-    public Tapped = (): void => {
+    public Wrong = (): void => {
+        this.Shake_Pang();
+    }
+
+    Shake_Pang = (): void => {
+        this.node.setPosition(this._posInit);
+
+        tween(this.node)
+            .to(0.2, {}, {
+                onUpdate: (target: object, ratio: number) => {
+                    // console.log(ratio);
+
+                    // let revRatio = 1.0 - ratio;
+                    // console.log(revRatio);
+
+                    // console.log(this._initPosition);
+                    // console.log(this.node.getPosition());
+
+                    let pos = new Vec3(this._posInit);
+                    pos.x += math.randomRange(-5.0, 5.0);
+                    pos.y += math.randomRange(-5.0, 5.0);                    
+                    this.node.setPosition(pos);
+                },
+                onComplete: (target: object) => {
+                    this.node.setPosition(this._posInit);
+                    // console.log("Shake-onComplete");
+                }
+            })
+            .start();
+    }
+
+    public Correct = (): void => {
         // this.destroy();
         // this.node.destroy();
 

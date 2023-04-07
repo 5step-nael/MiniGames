@@ -1,4 +1,4 @@
-import { _decorator, Component, instantiate, Label, math, Node, Prefab, Vec3 } from 'cc';
+import { _decorator, Component, instantiate, Label, math, Node, Prefab, Vec3, Button } from 'cc';
 import { Pang } from './Pang';
 const { ccclass, property } = _decorator;
 
@@ -125,6 +125,9 @@ export class MainStage extends Component {
             let cs_Pang = pang.getComponent(Pang);
             cs_Pang.Setup(item, this.Get_Position());
 
+            let button_Pang = pang.getComponent(Button);
+            button_Pang.node.on(Button.EventType.CLICK, this.foo, this);
+
             this._pangs.push(cs_Pang);
         }
 
@@ -133,6 +136,11 @@ export class MainStage extends Component {
         this.lbl_KR.string = this.WordList[index_Words].kr;
         this._now_Word = this.WordList[index_Words].en;
         this._ready_WordIndex = 0;
+    }
+
+    foo = (__button: Button): void => {
+        let pang = __button.getComponent(Pang);
+        console.log(pang.CHAR);
     }
 
     private Get_Position = (): Vec3 => {

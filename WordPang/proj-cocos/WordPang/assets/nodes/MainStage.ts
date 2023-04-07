@@ -108,7 +108,8 @@ export class MainStage extends Component {
         this.Reset();
 
         let index_Words = math.randomRangeInt(0, this.WordList.length);
-        {
+        {//DEV TEST
+            // index_Words = 15;//DEV TEST (PENGUIN)
             // index_Words = 16;//DEV TEST (QUEEN)
             // index_Words = 14;//DEV TEST (OCTOPUS)
         }
@@ -147,11 +148,11 @@ export class MainStage extends Component {
 
     Tapped_Pang = (__button: Button): void => {
         let pang = __button.getComponent(Pang);
-        let keyChar = this._now_Word[pang.Index];
+        let keyChar = this._now_Word[this._ready_WordIndex];
         console.log(`Tapped_Pang(${pang.Index}, ${pang.CHAR}): ${keyChar}`);
         
         //if(this._ready_WordIndex != pang.Index) {
-        if(keyChar != pang.CHAR) {
+        if(keyChar != pang.CHAR) {//char 비교.. 중복되는 알파벳 고려
             console.log("틀림!!");
             return;
         }

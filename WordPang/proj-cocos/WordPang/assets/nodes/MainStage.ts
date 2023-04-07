@@ -1,4 +1,4 @@
-import { _decorator, Component, instantiate, math, Node, Prefab, Vec3 } from 'cc';
+import { _decorator, Component, instantiate, Label, math, Node, Prefab, Vec3 } from 'cc';
 import { Pang } from './Pang';
 const { ccclass, property } = _decorator;
 
@@ -10,9 +10,17 @@ export class MainStage extends Component {
     @property(Node)
     private node_Pangs = null;
 
+    @property(Label)
+    private lbl_KR = null;
+    @property(Label)
+    private lbl_EN = null;
+
     private _pangs: Pang[] = [];
 
     start() {
+        this.lbl_KR.string = "";
+        this.lbl_EN.string = "";
+        
         this.Make_Word();
     }
 
@@ -52,8 +60,8 @@ export class MainStage extends Component {
         // { word="ABCDEFGHIJKLMNOPQRSTUV"; }
         {
             let addItem = this.Get_PickWordAddItem(word);
+            console.log(`${word} +${addItem}`);
             word += addItem;
-            console.log(word);
         }
         // { word = "BANANABANANABANANABANANA"; }//DEV TEST
         for(let item of word) {

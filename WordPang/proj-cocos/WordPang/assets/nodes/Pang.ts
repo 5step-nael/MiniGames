@@ -9,10 +9,14 @@ export class Pang extends Component {
     @property([Label])
     private label: Label = null;
 
+    public CHAR: string = "";
+
     start() {
     }
 
     public Setup(__char: string, __pos: Vec3) {
+        this.CHAR = __char;
+        
         this.label.string = __char;
 
         this.node.position = __pos;

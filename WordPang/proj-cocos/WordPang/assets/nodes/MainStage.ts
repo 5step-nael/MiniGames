@@ -56,11 +56,23 @@ export class MainStage extends Component {
         new Word("얼룩말", "ZEBRA"),
     ];
 
+    private _now_Word: string = "";
+    private _ready_WordIndex = -1;
+
     start() {
+        this.Reset();
+
+        this.Make_Word();
+    }
+
+    Reset = (): void => {
+        this._pangs = [];
+
         this.lbl_KR.string = "";
         this.lbl_EN.string = "";
-        
-        this.Make_Word();
+
+        this._now_Word = "";
+        this._ready_WordIndex = -1;
     }
 
     Get_PickWordAddItem = (__word: string): string => {
@@ -93,7 +105,7 @@ export class MainStage extends Component {
     }
 
     Make_Word() {
-        this._pangs = [];
+        this.Reset();
 
         let index_Words = math.randomRangeInt(0, this.WordList.length);
         let word: string = this.WordList[index_Words].en;
@@ -119,6 +131,8 @@ export class MainStage extends Component {
         // console.log(this._pangs.length);
 
         this.lbl_KR.string = this.WordList[index_Words].kr;
+        this._now_Word = this.WordList[index_Words].en;
+        this._ready_WordIndex = 0;
     }
 
     private Get_Position = (): Vec3 => {

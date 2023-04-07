@@ -2,6 +2,16 @@ import { _decorator, Component, instantiate, Label, math, Node, Prefab, Vec3 } f
 import { Pang } from './Pang';
 const { ccclass, property } = _decorator;
 
+class Word {
+    public kr: string = "";
+    public en: string = "";
+
+    public constructor(__kr: string, __en: string) {
+        this.kr = __kr;
+        this.en = __en;
+    }
+}
+
 @ccclass('MainStage')
 export class MainStage extends Component {
     @property({type: Prefab})
@@ -53,10 +63,15 @@ export class MainStage extends Component {
         return ret;
     }
 
+    readonly WordList: Word[] = [
+        new Word("사과", "APPLE"),
+    ];
+
     Make_Word() {
         this._pangs = [];
 
-        let word: string = "APPLE";
+        let index_Words = math.randomRangeInt(0, this.WordList.length);
+        let word: string = this.WordList[index_Words].en;
         // { word="ABCDEFGHIJKLMNOPQRSTUV"; }
         {
             let addItem = this.Get_PickWordAddItem(word);
@@ -77,6 +92,8 @@ export class MainStage extends Component {
         }
 
         // console.log(this._pangs.length);
+
+        this.lbl_KR.string = this.WordList[index_Words].kr;
     }
 
     private Get_Position = (): Vec3 => {

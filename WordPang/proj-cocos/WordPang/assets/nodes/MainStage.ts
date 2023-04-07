@@ -159,6 +159,8 @@ export class MainStage extends Component {
         }
 
         this.lbl_EN.string = this._now_Word.substring(0, this._ready_WordIndex + 1);
+        pang.Correct();
+
         // console.log(`collect=> Now: ${this._now_Word}`);
         this._ready_WordIndex += 1;
         if(this._now_Word.length <= this._ready_WordIndex) {
@@ -167,8 +169,9 @@ export class MainStage extends Component {
             for(let index=this._ready_WordIndex; index<this._pangs.length; index++) {
                 this._pangs[index].Hide_Pang(true);
             }
+            
+            this.Make_Word();
         }
-        pang.Correct();
     }
 
     private Get_Position = (): Vec3 => {

@@ -16,10 +16,45 @@ export class MainStage extends Component {
         this.Make_Word();
     }
 
+    Get_PickWordAddItem = (__word: string): string => {
+        let Ascii_A = 65;
+        let Ascii_Z = 90;
+        let Ascii_a = 97;
+        let Ascii_z = 122;
+
+        let fullWord = __word;
+        // fullWord += "afdf";
+        // console.log(`${__word} => ${fullWord}`);
+
+        let ret = "";
+        let addCount = math.randomRangeInt(1, 3 + 1);
+
+        while(true) {
+            let rnd_Ascii = math.randomRangeInt(Ascii_A, Ascii_Z + 1);
+            let char_Ascii = String.fromCharCode(rnd_Ascii);
+
+            if(-1 == fullWord.indexOf(char_Ascii)) {
+                ret += char_Ascii;
+                fullWord += char_Ascii;
+
+                if(addCount <= ret.length) {
+                    break;
+                }
+            }
+        }
+        return ret;
+    }
+
     Make_Word() {
         this._pangs = [];
 
         let word: string = "APPLE";
+        // { word="ABCDEFGHIJKLMNOPQRSTUV"; }
+        {
+            let addItem = this.Get_PickWordAddItem(word);
+            word += addItem;
+            console.log(word);
+        }
         // { word = "BANANABANANABANANABANANA"; }//DEV TEST
         for(let item of word) {
             // console.log(item);
@@ -33,7 +68,7 @@ export class MainStage extends Component {
             this._pangs.push(cs_Pang);
         }
 
-        console.log(this._pangs.length);
+        // console.log(this._pangs.length);
     }
 
     private Get_Position = (): Vec3 => {

@@ -20,8 +20,8 @@ export class MainStage extends Component {
         this._pangs = [];
 
         let word: string = "APPLE";
-        { word = "BANANA"; }//DEV TEST
-        for(var item of word) {
+        // { word = "BANANABANANABANANABANANA"; }//DEV TEST
+        for(let item of word) {
             // console.log(item);
 
             let pang = instantiate(this.prfb_Pang);
@@ -37,9 +37,34 @@ export class MainStage extends Component {
     }
 
     private Get_Position = (): Vec3 => {
-        let x = math.randomRange(-460.0, 460.0);
-        let y = math.randomRange(-640.0, 640.0);
-        return new Vec3(x, y, 0.0);
+
+        // let x = math.randomRange(-460.0, 460.0);
+        // let y = math.randomRange(-640.0, 640.0);
+        // let ret = new Vec3(x, y, 0.0);
+
+        let ret = new Vec3(0, 0, 0.0);
+        while(true)
+        {
+            let x = math.randomRange(-420.0, 420.0);
+            let y = math.randomRange(-520.0, 520.0);
+
+            ret.x = x;
+            ret.y = y;
+
+            let isCollision: boolean = false;
+
+            for(let item of this._pangs) {
+                if(item.Check_Collision(ret)) {
+                    isCollision = true;
+                    break;
+                }
+            }
+
+            if(!isCollision) {
+                break;
+            }
+        }
+        return ret;
     }
 
     // update(deltaTime: number) {}

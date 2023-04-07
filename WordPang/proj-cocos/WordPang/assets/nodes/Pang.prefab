@@ -372,7 +372,9 @@
     "spr_Circle": {
       "__id__": 5
     },
-    "label": null,
+    "label": {
+      "__id__": 11
+    },
     "_id": ""
   },
   {
@@ -388,6 +390,7 @@
       "__id__": 0
     },
     "fileId": "a5W4/aRFxGgLc9SRB70f4o",
+    "instance": null,
     "targetOverrides": null
   }
 ]
